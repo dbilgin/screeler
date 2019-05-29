@@ -1,7 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'firestore.dart';
-import 'preferences.dart';
+import 'package:screeler/handlers/firestore.dart';
+import 'package:screeler/handlers/preferences.dart';
 
 class Auth {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -25,6 +25,6 @@ class Auth {
   signIn() {
     _handleSignIn()
         .then((FirebaseUser user) => {FireStore.saveUserToFireStore(user), Preferences.saveUid(user.uid)})
-        .catchError((e) => {signIn()});
+        .catchError((e) => {print(e)});
   }
 }

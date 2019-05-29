@@ -10,9 +10,9 @@
 // bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
 
 import 'package:flutter/material.dart';
-import 'firestore.dart';
+import 'package:screeler/handlers/firestore.dart';
 import 'package:http/http.dart' as http;
-import 'requests.dart';
+import 'package:screeler/handlers/requests.dart';
 
 /// This Widget is the main application widget.
 class Genres extends StatelessWidget {
@@ -22,31 +22,27 @@ class Genres extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: HomeStatefulWidget(),
+      home: GenreStatefulWidget(),
     );
   }
 }
 
-class HomeStatefulWidget extends StatefulWidget {
-  HomeStatefulWidget({Key key}) : super(key: key);
+class GenreStatefulWidget extends StatefulWidget {
+  GenreStatefulWidget({Key key}) : super(key: key);
 
   @override
-  _HomeStatefulWidgetState createState() => _HomeStatefulWidgetState();
+  _GenreStatefulWidgetState createState() => _GenreStatefulWidgetState();
 }
 
-class _HomeStatefulWidgetState extends State<HomeStatefulWidget> with Requests {
-  var _movieGenres;
-
-  Future _init() async {
-    var userGenres = await FireStore.getUserGenres();
-    getGenres();
-  }
+class _GenreStatefulWidgetState extends State<GenreStatefulWidget>
+    with Requests {
+  dynamic _movieGenres;
 
   Future<http.Response> getGenres() async {
-    var movieGenres = await getMovieGenres();
+    dynamic movieGenres = await getMovieGenres();
     print(movieGenres);
     setState(() {
-      _movieGenres: movieGenres;
+      _movieGenres = movieGenres;
     });
   }
 
@@ -56,9 +52,13 @@ class _HomeStatefulWidgetState extends State<HomeStatefulWidget> with Requests {
     super.initState();
   }
 
+  Future _init() async {
+    var userGenres = await FireStore.getUserGenres();
+    getGenres();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

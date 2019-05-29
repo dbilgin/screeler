@@ -8,11 +8,10 @@
 //
 // ![A scaffold with a bottom navigation bar containing three bottom navigation
 // bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
-
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'genres.dart';
-import 'auth.dart';
+import 'package:screeler/handlers/auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -57,7 +56,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with Auth {
 
   @override
   void initState() {
-    print("SIGNING IN");
     signIn();
     super.initState();
   }

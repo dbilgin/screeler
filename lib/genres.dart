@@ -1,22 +1,16 @@
-// Flutter code sample for material.BottomNavigationBar.1
-
-// This example shows a [BottomNavigationBar] as it is used within a [Scaffold]
-// widget. The [BottomNavigationBar] has three [BottomNavigationBarItem]
-// widgets and the [currentIndex] is set to index 0. The selected item is
-// amber. The `_onItemTapped` function changes the selected item's index
-// and displays a corresponding message in the center of the [Scaffold].
-//
-// ![A scaffold with a bottom navigation bar containing three bottom navigation
-// bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
-
 import 'package:flutter/material.dart';
 import 'package:screeler/handlers/firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:screeler/handlers/requests.dart';
+import 'handlers/styles.dart';
 
 /// This Widget is the main application widget.
 class Genres extends StatelessWidget {
   static const String _title = 'Screeler!';
+
+  Genres() {
+    print("initialized");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +29,25 @@ class GenreStatefulWidget extends StatefulWidget {
 }
 
 class _GenreStatefulWidgetState extends State<GenreStatefulWidget>
-    with Requests {
-  dynamic _movieGenres;
+    with AutomaticKeepAliveClientMixin<GenreStatefulWidget>, Requests {
+  @override
+  bool get wantKeepAlive => true;
 
-  Future<http.Response> getGenres() async {
-    dynamic movieGenres = await getMovieGenres();
-    print(movieGenres);
+  List<dynamic> _movieGenres;
+  List<dynamic> _tvGenres;
+
+  Future getGenres() async {
+    if (_movieGenres != null && _tvGenres != null) return null;
+
+    List<dynamic> movieGenres = await getMovieGenres();
+    List<dynamic> tvGenres = await getTVGenres();
+
+    if (movieGenres == null && tvGenres == null) return null;
+
+    print("Getting movies");
     setState(() {
       _movieGenres = movieGenres;
+      _tvGenres = tvGenres;
     });
   }
 
@@ -52,28 +57,30 @@ class _GenreStatefulWidgetState extends State<GenreStatefulWidget>
     super.initState();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future _init() async {
     var userGenres = await FireStore.getUserGenres();
-    getGenres();
+    if (_movieGenres == null || _tvGenres == null) getGenres();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(bottom: 20.0),
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(_movieGenres?.length ?? 0, (index) {
+        return Center(
           child: Text(
-            _movieGenres.toString(),
-            style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                decoration: TextDecoration.none),
+            _movieGenres[index]["name"],
+            style: Theme.of(context).textTheme.headline,
           ),
-        ),
-      ],
+        );
+      }),
     );
   }
 }

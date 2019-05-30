@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shake_event/shake_event.dart';
+import 'handlers/styles.dart';
 
 /// This Widget is the main application widget.
 class Home extends StatelessWidget {
@@ -44,26 +45,28 @@ class _HomeStatefulWidgetState extends State<HomeStatefulWidget> with ShakeHandl
   Widget build(BuildContext context) {
     startListeningShake(10);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(bottom: 20.0),
-          child: Text(
-            'Shake to get a movie',
-            style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                decoration: TextDecoration.none),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: Text(
+              'Shake to get a movie',
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  decoration: TextDecoration.none),
+            ),
           ),
-        ),
-        Icon(
-          Icons.screen_rotation,
-          color: Colors.black,
-          size: 50.0,
-        ),
-      ],
+          Icon(
+            Icons.screen_rotation,
+            color: Colors.black,
+            size: 50.0,
+          ),
+        ],
+      ),
     );
   }
 }

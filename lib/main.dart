@@ -1,17 +1,8 @@
-// Flutter code sample for material.BottomNavigationBar.1
-
-// This example shows a [BottomNavigationBar] as it is used within a [Scaffold]
-// widget. The [BottomNavigationBar] has three [BottomNavigationBarItem]
-// widgets and the [currentIndex] is set to index 0. The selected item is
-// amber. The `_onItemTapped` function changes the selected item's index
-// and displays a corresponding message in the center of the [Scaffold].
-//
-// ![A scaffold with a bottom navigation bar containing three bottom navigation
-// bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'genres.dart';
 import 'package:screeler/handlers/auth.dart';
+import 'handlers/styles.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,58 +27,36 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> with Auth {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Genres(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  void initState() {
-    signIn();
-    super.initState();
-  }
+  Home _home = new Home();
+  Genres _genres = new Genres();
+  List<Widget> _pages;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Screeler!'),
-        backgroundColor: Colors.amber[800],
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_movies),
-            title: Text('Find'),
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Screeler!'),
+            backgroundColor: Styles.screelerColor,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.style),
-            title: Text('My Genres'),
+          body: TabBarView(
+            children: [
+              _home,
+              _genres,
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.movie),
-            title: Text('My Movies'),
+          bottomNavigationBar: BottomAppBar(
+            color: Styles.screelerColor,
+            child: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.movie)),
+                Tab(icon: Icon(Icons.style)),
+              ],
+            ),
           ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        ),
       ),
     );
   }

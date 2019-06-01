@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'genres.dart';
 import 'package:screeler/handlers/auth.dart';
-import 'handlers/styles.dart';
+import 'package:screeler/helpers/styles.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,7 +29,12 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> with Auth {
   Home _home = new Home();
   Genres _genres = new Genres();
-  List<Widget> _pages;
+
+  @override
+  void initState() {
+    signIn();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +45,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with Auth {
           appBar: AppBar(
             title: Text('Screeler!'),
             backgroundColor: Styles.screelerColor,
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.movie)),
+                Tab(icon: Icon(Icons.style)),
+              ],
+            ),
           ),
           body: TabBarView(
             children: [
               _home,
               _genres,
             ],
-          ),
-          bottomNavigationBar: BottomAppBar(
-            color: Styles.screelerColor,
-            child: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.movie)),
-                Tab(icon: Icon(Icons.style)),
-              ],
-            ),
           ),
         ),
       ),

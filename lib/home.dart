@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shake_event/shake_event.dart';
-import 'handlers/styles.dart';
+import 'package:screeler/helpers/styles.dart';
 
 /// This Widget is the main application widget.
 class Home extends StatelessWidget {
@@ -22,7 +22,8 @@ class HomeStatefulWidget extends StatefulWidget {
   _HomeStatefulWidgetState createState() => _HomeStatefulWidgetState();
 }
 
-class _HomeStatefulWidgetState extends State<HomeStatefulWidget> with ShakeHandler {
+class _HomeStatefulWidgetState extends State<HomeStatefulWidget>
+    with ShakeHandler {
   _showDialog() {
     Scaffold.of(context).showSnackBar(new SnackBar(
       content: new Text("Getting reccomendation..."),

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:screeler/handlers/preferences.dart';
+import 'package:screeler/helpers/preferences.dart';
 
 class FireStore {
   static saveUserToFireStore(FirebaseUser user) async {

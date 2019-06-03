@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shake_event/shake_event.dart';
-import 'package:screeler/helpers/styles.dart';
+import 'package:screeler/util/styles.dart';
 
 /// This Widget is the main application widget.
 class Home extends StatelessWidget {

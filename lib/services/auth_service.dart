@@ -1,7 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:screeler/helpers/firestore.dart';
-import 'package:screeler/helpers/preferences.dart';
+import '../util/firestore.dart';
+import '../util/preferences.dart';
 
 class Auth {
   final GoogleSignIn _googleSignIn = GoogleSignIn();

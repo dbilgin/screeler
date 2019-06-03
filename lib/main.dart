@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'genres.dart';
-import 'package:screeler/handlers/auth.dart';
-import 'package:screeler/helpers/styles.dart';
+import 'package:screeler/screens/home.dart';
+import 'package:screeler/screens/genres.dart';
+import 'package:screeler/services/auth_service.dart';
+import 'package:screeler/util/styles.dart';
 
 void main() => runApp(MyApp());
 

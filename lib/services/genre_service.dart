@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:screeler/helpers/app_configuration.dart';
+import 'package:screeler/util/app_configuration.dart';
 import 'dart:convert';
 
 class Requests {

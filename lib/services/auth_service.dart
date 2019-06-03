@@ -3,10 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../util/firestore.dart';
 import '../util/preferences.dart';
 
-class Auth {
+class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  /// Signs in to Google with Firebase.
+  ///
+  /// Returns a [FirebaseUser] from the Google sign in.
   Future<FirebaseUser> _handleSignIn() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
@@ -22,6 +25,7 @@ class Auth {
     return user;
   }
 
+  /// Starts the sign in process with Firebase.
   signIn() {
     _handleSignIn()
         .then((FirebaseUser user) => {FireStore.saveUserToFireStore(user), Preferences.saveUid(user.uid)})

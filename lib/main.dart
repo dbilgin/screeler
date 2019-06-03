@@ -26,7 +26,7 @@ class MyStatefulWidget extends StatefulWidget {
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> with Auth {
+class _MyStatefulWidgetState extends State<MyStatefulWidget> with AuthService {
   Home _home = new Home();
   Genres _genres = new Genres();
 

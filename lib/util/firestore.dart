@@ -4,8 +4,11 @@ import 'package:screeler/util/preferences.dart';
 import 'dart:convert';
 
 class FireStore {
-  // A new [User] is saved to Firestore
-  // This can be done after the login through Firebase
+  /// Saves [user] to Firestore.
+  ///
+  /// The new [user] is saved to Firestore if it
+  /// doesn't already exist.
+  /// This can be done after the login through Firebase
   static saveUserToFireStore(FirebaseUser user) async {
     var userDocument =
         await Firestore.instance.collection('users').document(user.uid).get();
@@ -19,9 +22,10 @@ class FireStore {
     }
   }
 
-  // Retrieves user-specific genres
-  // The document of genres for the user are retrieved
-  // through the user's UID
+  /// Retrieves user-specific genres.
+  ///
+  /// The document of genres for the user are retrieved
+  /// through the user's UID as [dynamic].
   static Future<dynamic> getUserGenres() async {
     return await Firestore.instance
         .collection('selected-genres')
@@ -32,17 +36,16 @@ class FireStore {
     });
   }
 
-  /// A group of *members*.
+  /// Adds or removes a user selected genre.
   ///
-  /// When a user selects a new genre
-  /// this will be used to add it to the firestore
-  ///
-  /// @param T the type of a member in this group.
-  /// @property name the name of this group.
-  /// @constructor Creates an empty group.
+  /// Checks the current [userGenres], if it has the [id]
+  /// removes it from Firestore, otherwise adds [id] and [name]
+  /// to user's selected genres. Returns the updated [userGenres].
   static Future<Map<String, dynamic>> updateUserGenre(int id, String name,
       Map<String, dynamic> userGenres, bool isMovie) async {
     String key = (isMovie ? 'mov' : 'tv') + id.toString();
+
+    if (userGenres == null) userGenres = new Map<String, dynamic>();
 
     if (userGenres[key] == null)
       userGenres.putIfAbsent(key, () => name);

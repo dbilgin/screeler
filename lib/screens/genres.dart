@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:screeler/util/firestore.dart';
 import 'package:screeler/services/genre_service.dart';
 import '../util/styles.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 /// This Widget is the main application widget.
 class Genres extends StatelessWidget {
@@ -28,7 +29,7 @@ class GenreStatefulWidget extends StatefulWidget {
 }
 
 class _GenreStatefulWidgetState extends State<GenreStatefulWidget>
-    with AutomaticKeepAliveClientMixin<GenreStatefulWidget>, Requests {
+    with AutomaticKeepAliveClientMixin<GenreStatefulWidget>, GenreService {
   @override
   bool get wantKeepAlive => true;
 
@@ -45,26 +46,32 @@ class _GenreStatefulWidgetState extends State<GenreStatefulWidget>
     ),
   ];
 
-  Widget genreButton(int id, String name, Map<String, dynamic> userGenres, bool isMovie) {
-    var checkGenre = userGenres[(isMovie ? 'mov' : 'tv') + id.toString()];
-    Color buttonColor = (checkGenre == null) ? Colors.white : Styles.randomColor();
+  Widget genreButton(
+      int id, String name, Map<String, dynamic> userGenres, bool isMovie) {
+    var checkGenre = (userGenres == null || userGenres.length == 0)
+        ? null
+        : userGenres[(isMovie ? 'mov' : 'tv') + id.toString()];
+    Color buttonColor =
+        (checkGenre == null) ? Colors.white : Styles.randomColor();
     Color textColor = (checkGenre == null) ? Colors.black : Colors.white;
     return ButtonTheme(
-        buttonColor:buttonColor,
+        buttonColor: buttonColor,
         child: RaisedButton(
           shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
           onPressed: () async {
-            userGenres = await FireStore.updateUserGenre(id, name, userGenres, isMovie);
+            userGenres =
+                await FireStore.updateUserGenre(id, name, userGenres, isMovie);
             setState(() {
               _widgetOptions = <Widget>[
                 genreGrids(_movieGenres, true),
                 genreGrids(_tvGenres, false),
               ];
             });
+            if (_userGenres == null) getGenres();
           },
           textColor: textColor,
           padding: const EdgeInsets.all(0.0),
-          child: Text(
+          child: AutoSizeText(
             name,
             style: TextStyle(fontSize: 20),
             maxLines: 1,
@@ -92,11 +99,12 @@ class _GenreStatefulWidgetState extends State<GenreStatefulWidget>
 
   genreGrids(List<dynamic> list, bool isMovie) {
     return GridView.count(
+      padding: EdgeInsets.all(0),
       crossAxisCount: 3,
       children: List.generate(list?.length ?? 0, (index) {
         return Container(
-          child:
-              genreButton(list[index]["id"], list[index]["name"], _userGenres, isMovie),
+          child: genreButton(
+              list[index]["id"], list[index]["name"], _userGenres, isMovie),
         );
       }),
     );

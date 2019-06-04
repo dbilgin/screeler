@@ -6,6 +6,6 @@ Simply open the project in Android Studio and run it as a Flutter application.
 
 If you haven't used flutter before, you can check the installation guide from https://flutter.dev/docs/get-started/install
 
-The application is published on Google Play.
+The application is published on [Google Play](https://play.google.com/store/apps/details?id=com.omedacore.screeler).
 
 >> Add google-services.json to screeler/android/app.

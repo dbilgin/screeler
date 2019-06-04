@@ -1,10 +1,11 @@
 # screeler
 
-Get a movie recommendation.
+This is a sample Flutter application, that saves user settings on Firebase and gets movie recommendations according to which genres the user chooses.
 
-## Getting Started
+Simply open the project in Android Studio and run it as a Flutter application.
 
-This project is a starting point for a Flutter application.
-Put google-services.json file that you got from Firebase under /android/app/
+If you haven't used flutter before, you can check the installation guide from https://flutter.dev/docs/get-started/install
 
-Add your own /assets/app_config.json which includes API key to https://www.themoviedb.org/
+The application is published on Google Play.
+
+>> Add google-services.json to screeler/android/app.
